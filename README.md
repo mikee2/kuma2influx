@@ -6,7 +6,7 @@ A simple python script to read the metrics from kuma monitors and output them in
 # Why
 My monitor stack is a TIG one so I have no prometheus. The only way I found to inject kuma data into a grafana console was through prometheus so I had to create my own script to be able to do it via influxdb.
 
-This is an initial version so bear with me.
+This is an initial version so bear with me. I have only included the type of monitors that I am using so there my be many others fields that may be of interest for include. If you have any of these and need to include them please tell me. 
 
 # What you need
 An API key from your kuma host. Create the key in Settings->API Keys
