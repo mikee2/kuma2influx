@@ -33,7 +33,7 @@ For the command line you can use a direct exec if the script is in a folder accs
 
 or else sudo it
 
-     "sudo /usr/bin/python3 /etc/telegraf/bin/kuma2influx.py server1 server2 dbserver*"
+     "sudo /usr/bin/python3 /<script_path>/kuma2influx.py server1 server2 dbserver*"
 
 In this case you would need to have sudo installed and configure visudo with 
 
