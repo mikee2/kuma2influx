@@ -2,6 +2,7 @@
 
 # Autor: Miguel Erill
 # Version: 0.1 (08/09/2023) Version inicial
+#          0.2 (12/09/2023) Minor fixes after being run in several sites
 #
 #
 # Call it with a list of monitors to include or nothing to include all
@@ -74,7 +75,10 @@ if resp.status_code == 200:
         # Include only listed monitors, if any, or all if empty
         if n_param > 0 and not any(fnmatch.fnmatch(name, patrn) for patrn in args):
           continue
-        monitors.setdefault(name, {}).setdefault('type', d['monitor_type'].strip('\"'))
+        type = d['monitor_type'].strip('\"')
+        if type == 'group':   # Group monitors have no info
+          continue
+        monitors.setdefault(name, {}).setdefault('type', type)
         if p == 0: # Cert days remaining
           monitors[name]['url'] = d['monitor_url'].strip('\"')
           monitors[name]['cert_days'] = s[1].strip()
@@ -92,6 +96,6 @@ if resp.status_code == 200:
     v_or_m = '1i' if (m_info['status']=='1' or m_info['status']=='3') else '0i'
     if m_info.get('cert_days') != None:
       # HTTPS monitors return additional set of values
-      print (M_NAME+',monitor='+m_id+',type='+m_info['type']+' host="'+m_info['host']+'",resp_time='+m_info['resp_time']+',status='+m_info['status']+'i,up_or_maintenance='+v_or_m+',url='+m_info['url']+',days='+m_info['cert_days']+'i,valid='+m_info['cert_valid']+'i')
+      print (M_NAME+',monitor='+m_id+',type='+m_info['type']+' host="'+m_info['host']+'",resp_time='+m_info['resp_time']+',status='+m_info['status']+'i,up_or_maintenance='+v_or_m+',url="'+m_info['url']+'",days='+m_info['cert_days']+'i,valid='+m_info['cert_valid']+'i')
     else:
       print (M_NAME+',monitor='+m_id+',type='+m_info['type']+' host="'+m_info['host']+'",resp_time='+m_info['resp_time']+',status='+m_info['status']+'i,up_or_maintenance='+v_or_m)
